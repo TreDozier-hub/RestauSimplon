@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 public class GestionCategorie
 {
-    private readonly CommandeDb _context;
+    private readonly CommandeDb _db;
 
-    public GestionCategorie(CommandeDb context)
+    public GestionCategorie(CommandeDb db)
     {
-        _context = context;
+        _db = db;
     }
 
     public async Task<IEnumerable<CategorieDTO>> GetAllCategories()
     {
-        return await _context.Categories
+        return await _db.Categories
             .Select(categorie => new CategorieDTO
             {
                 //CategorieId = categorie.CategorieId,
@@ -24,7 +24,7 @@ public class GestionCategorie
 
     public async Task<CategorieDTO> GetCategorie(int id)
     {
-        var categorie = await _context.Categories.FindAsync(id);
+        var categorie = await _db.Categories.FindAsync(id);
 
         if (categorie == null)
         {
@@ -48,8 +48,8 @@ public class GestionCategorie
             Nom = categorieDTO.Nom
         };
 
-        _context.Categories.Add(categorie);
-        await _context.SaveChangesAsync();
+        _db.Categories.Add(categorie);
+        await _db.SaveChangesAsync();
 
         // Mise à jour du DTO avec l'ID généré
         categorieDTO.CategorieId = categorie.CategorieId;
@@ -60,7 +60,7 @@ public class GestionCategorie
 
     public async Task<bool> UpdateCategorie(int id, CategorieDTO categorieDTO)
     {
-        var categorie = await _context.Categories.FindAsync(id);
+        var categorie = await _db.Categories.FindAsync(id);
         if (categorie == null)
         {
             return false;
@@ -70,12 +70,12 @@ public class GestionCategorie
 
         try
         {
-            await _context.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return true;
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.Categories.Any(categorie => categorie.CategorieId == id))
+            if (!_db.Categories.Any(categorie => categorie.CategorieId == id))
             {
                 return false;
             }
@@ -88,14 +88,14 @@ public class GestionCategorie
 
     public async Task<bool> DeleteCategorie(int id)
     {
-        var categorie = await _context.Categories.FindAsync(id);
+        var categorie = await _db.Categories.FindAsync(id);
         if (categorie == null)
         {
             return false;
         }
 
-        _context.Categories.Remove(categorie);
-        await _context.SaveChangesAsync();
+        _db.Categories.Remove(categorie);
+        await _db.SaveChangesAsync();
 
         return true;
     }
