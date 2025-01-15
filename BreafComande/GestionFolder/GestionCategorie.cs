@@ -41,7 +41,7 @@ public class GestionCategorie
     public async Task<CategorieDTO> CreateCategorie(CategorieDTO categorieDTO)
     {
         if (string.IsNullOrWhiteSpace(categorieDTO.Nom))
-            return null; // ou retournez une réponse d'erreur appropriée
+            return null;
 
         var categorie = new Categorie
         {

@@ -11,11 +11,6 @@ public static class ImportJson
             PropertyNameCaseInsensitive = true
         };
 
-        // Lire et désérialiser les clients
-        var clientsJson = File.ReadAllText("clients.json");
-        var clients = JsonSerializer.Deserialize<List<Client>>(clientsJson, options);
-        context.Clients.AddRange(clients);
-
         // Lire et désérialiser les catégories
         var categoriesJson = File.ReadAllText("categories.json");
         var categories = JsonSerializer.Deserialize<List<Categorie>>(categoriesJson, options);
@@ -25,12 +20,6 @@ public static class ImportJson
         var articlesJson = File.ReadAllText("articles.json");
         var articles = JsonSerializer.Deserialize<List<Article>>(articlesJson, options);
         context.Articles.AddRange(articles);
-
-        // Lire et désérialiser les commandes
-        var commandesJson = File.ReadAllText("commandes.json");
-        var commandes = JsonSerializer.Deserialize<List<Commande>>(commandesJson, options);
-        context.Commandes.AddRange(commandes);
-
         context.SaveChanges();
     }
 }

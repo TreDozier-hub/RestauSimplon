@@ -5,6 +5,8 @@
         public int Id { get; set; }
         public string Nom { get; set; } = string.Empty;
         public decimal Prix { get; set; }
+
+        // Clé étrangère vers Categorie
         public int CategorieId { get; set; }  // Clé étrangère vers Categorie
 
         // Propriété de navigation vers Categorie
